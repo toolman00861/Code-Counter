@@ -18,3 +18,4 @@ C:\Users\25464\Documents\Code-Counter\obj\Debug\net9.0-windows\refint\Code-Count
 C:\Users\25464\Documents\Code-Counter\obj\Debug\net9.0-windows\Code-Counter.pdb
 C:\Users\25464\Documents\Code-Counter\obj\Debug\net9.0-windows\Code-Counter.genruntimeconfig.cache
 C:\Users\25464\Documents\Code-Counter\obj\Debug\net9.0-windows\ref\Code-Counter.dll
+C:\Users\25464\Documents\Code-Counter\obj\Debug\net9.0-windows\Code-Counter.sourcelink.json

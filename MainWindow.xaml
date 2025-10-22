@@ -5,35 +5,94 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Code_Counter"
         mc:Ignorable="d"
-        Title="代码统计工具" Height="520" Width="900">
+        Title="代码统计工具" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <SolidColorBrush x:Key="AccentBrush" Color="#4C6EF5"/>
-        <SolidColorBrush x:Key="AccentBrushHover" Color="#3B5BDB"/>
-        <SolidColorBrush x:Key="AccentBrushPressed" Color="#364FC7"/>
-        <SolidColorBrush x:Key="PrimaryTextBrush" Color="#1F2937"/>
-        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#6B7280"/>
+        <!-- 现代配色方案 -->
+        <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#667eea" Offset="0"/>
+            <GradientStop Color="#764ba2" Offset="1"/>
+        </LinearGradientBrush>
+        
+        <LinearGradientBrush x:Key="SecondaryGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#f093fb" Offset="0"/>
+            <GradientStop Color="#f5576c" Offset="1"/>
+        </LinearGradientBrush>
+        
+        <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#ffecd2" Offset="0"/>
+            <GradientStop Color="#fcb69f" Offset="1"/>
+        </LinearGradientBrush>
+        
+        <SolidColorBrush x:Key="AccentBrush" Color="#667eea"/>
+        <SolidColorBrush x:Key="AccentBrushHover" Color="#5a67d8"/>
+        <SolidColorBrush x:Key="AccentBrushPressed" Color="#4c51bf"/>
+        <SolidColorBrush x:Key="PrimaryTextBrush" Color="#2d3748"/>
+        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#718096"/>
+        <SolidColorBrush x:Key="CardBackground" Color="#ffffff"/>
+        <SolidColorBrush x:Key="ShadowBrush" Color="#e2e8f0"/>
 
+        <!-- 文本样式 -->
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
             <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="FontFamily" Value="Microsoft YaHei UI, Segoe UI"/>
         </Style>
 
+        <!-- 现代按钮样式 -->
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Padding" Value="16,10"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{StaticResource AccentBrush}" CornerRadius="6">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,4"/>
+                        <Border x:Name="border" Background="{StaticResource PrimaryGradient}" CornerRadius="8">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.3" Color="#667eea"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12,8"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource AccentBrushHover}"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="border" 
+                                                           Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                                           To="1.05" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="border" 
+                                                           Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                                           To="1.05" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="border" 
+                                                           Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                                           To="1.0" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="border" 
+                                                           Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                                           To="1.0" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource AccentBrushPressed}"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="border" Property="Opacity" Value="0.6"/>
@@ -44,15 +103,23 @@
             </Setter>
         </Style>
 
+        <!-- 现代文本框样式 -->
         <Style TargetType="TextBox">
-            <Setter Property="Padding" Value="8,6"/>
-            <Setter Property="BorderBrush" Value="#D1D5DB"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="BorderBrush" Value="#e2e8f0"/>
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="8">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="4" ShadowDepth="1" Opacity="0.1"/>
+                            </Border.Effect>
                             <ScrollViewer x:Name="PART_ContentHost"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -70,55 +137,123 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="#F8FAFC">
+    <!-- 主背景使用渐变 -->
+    <Grid Background="{StaticResource BackgroundGradient}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="代码统计工具" FontSize="22" FontWeight="Bold" Margin="24,20,24,12"/>
+        <!-- 标题区域 -->
+        <Border Grid.Row="0" Background="White" Margin="20,20,20,10" CornerRadius="12" Opacity="0.95">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.15"/>
+            </Border.Effect>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0.95" Duration="0:0:0.8"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.Y)" 
+                                           From="-30" To="0" Duration="0:0:0.8">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+            <Border.RenderTransform>
+                <TranslateTransform Y="0"/>
+            </Border.RenderTransform>
+            <TextBlock Text="📊 代码统计工具" FontSize="28" FontWeight="Bold" 
+                       Margin="30,20" HorizontalAlignment="Center"
+                       Foreground="{StaticResource PrimaryTextBrush}"/>
+        </Border>
 
-        <Grid Grid.Row="1">
+        <!-- 主内容区域 -->
+        <Grid Grid.Row="1" Margin="20,10,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="1" Padding="20" Background="White" CornerRadius="12">
+            <!-- 主卡片 -->
+            <Border Grid.Column="1" Padding="40,30" Background="White" CornerRadius="16" MinWidth="500">
                 <Border.Effect>
-                    <DropShadowEffect BlurRadius="14" ShadowDepth="2" Opacity="0.25"/>
+                    <DropShadowEffect BlurRadius="25" ShadowDepth="5" Opacity="0.2"/>
                 </Border.Effect>
                 <StackPanel>
-                    <TextBlock Text="选择文件夹" FontSize="16" Margin="0,0,0,10" Foreground="{StaticResource SecondaryTextBrush}"/>
-                    <Grid>
+                    <!-- 文件夹选择区域 -->
+                    <TextBlock Text="📁 选择项目文件夹" FontSize="18" FontWeight="SemiBold" 
+                               Margin="0,0,0,15" Foreground="{StaticResource SecondaryTextBrush}"/>
+                    
+                    <Grid Margin="0,0,0,25">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="FolderPathTextBox" IsReadOnly="True" MinWidth="420" />
-                        <Button Grid.Column="1" Click="BrowseButton_Click" Margin="10,0,0,0">
+                        <TextBox x:Name="FolderPathTextBox" IsReadOnly="True" MinWidth="350"/>
+                        <Button Grid.Column="1" Click="BrowseButton_Click" Margin="15,0,0,0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="" Margin="0,0,4,0"/>
-                                <TextBlock Text="浏览"/>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8DA;" Margin="0,0,8,0" FontSize="16"/>
+                                <TextBlock Text="浏览文件夹"/>
                             </StackPanel>
                         </Button>
                     </Grid>
-                    <Grid Margin="0,16,0,0">
+                    <!-- 统计结果显示区域 -->
+                    <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="代码文件数量" FontWeight="SemiBold" Foreground="{StaticResource SecondaryTextBrush}"/>
-                            <TextBlock x:Name="FileCountTextBlock" FontSize="16" Margin="0,6,0,0"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="总代码行数" FontWeight="SemiBold" Foreground="{StaticResource SecondaryTextBrush}"/>
-                            <TextBlock x:Name="LineCountTextBlock" FontSize="16" Margin="0,6,0,0"/>
-                        </StackPanel>
+                        
+                        <!-- 文件数量卡片 -->
+                        <Border Grid.Column="0" Background="{StaticResource PrimaryGradient}" CornerRadius="12" Padding="20,15">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10" ShadowDepth="3" Opacity="0.2"/>
+                            </Border.Effect>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,8">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A5;" FontSize="20" 
+                                               Foreground="White" Margin="0,0,8,0"/>
+                                    <TextBlock Text="代码文件" FontWeight="SemiBold" Foreground="White" FontSize="14"/>
+                                </StackPanel>
+                                <TextBlock x:Name="FileCountTextBlock" FontSize="24" FontWeight="Bold" 
+                                           HorizontalAlignment="Center" Foreground="White" Text="0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- 代码行数卡片 -->
+                        <Border Grid.Column="2" Background="{StaticResource SecondaryGradient}" CornerRadius="12" Padding="20,15">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10" ShadowDepth="3" Opacity="0.2"/>
+                            </Border.Effect>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,8">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8F3;" FontSize="20" 
+                                               Foreground="White" Margin="0,0,8,0"/>
+                                    <TextBlock Text="代码行数" FontWeight="SemiBold" Foreground="White" FontSize="14"/>
+                                </StackPanel>
+                                <TextBlock x:Name="LineCountTextBlock" FontSize="24" FontWeight="Bold" 
+                                           HorizontalAlignment="Center" Foreground="White" Text="0"/>
+                            </StackPanel>
+                        </Border>
                     </Grid>
-                    <TextBlock x:Name="StatusTextBlock" Text="正在计算..." Margin="0,12,0,0" FontSize="14" Visibility="Hidden" Foreground="{StaticResource AccentBrush}" FontStyle="Italic"/>
+
+                    <!-- 状态提示 -->
+                    <Border Background="#f7fafc" CornerRadius="8" Padding="15,10" Margin="0,10,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE9F3;" FontSize="16" 
+                                       Foreground="{StaticResource AccentBrush}" Margin="0,0,8,0"/>
+                            <TextBlock x:Name="StatusTextBlock" Text="正在计算..." FontSize="14" 
+                                       Visibility="Hidden" Foreground="{StaticResource AccentBrush}" 
+                                       FontStyle="Italic"/>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
             </Border>
         </Grid>

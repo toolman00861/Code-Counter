@@ -35,8 +35,8 @@ public partial class MainWindow : Window
                 FolderPathTextBox.Text = folderPath;
 
                 // Clear previous results and show status
-                FileCountTextBlock.Text = "";
-                LineCountTextBlock.Text = "";
+                FileCountTextBlock.Text = "0";
+                LineCountTextBlock.Text = "0";
                 StatusTextBlock.Visibility = Visibility.Visible;
 
                 // Define code file extensions
@@ -49,8 +49,8 @@ public partial class MainWindow : Window
                     // Update UI on main thread
                     Dispatcher.Invoke(() =>
                     {
-                        FileCountTextBlock.Text = $"代码文件数量: {fileCount}";
-                        LineCountTextBlock.Text = $"总代码行数: {lineCount}";
+                        FileCountTextBlock.Text = fileCount.ToString("N0");
+                        LineCountTextBlock.Text = lineCount.ToString("N0");
                         StatusTextBlock.Visibility = Visibility.Hidden;
                     });
                 }

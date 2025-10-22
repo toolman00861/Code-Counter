@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Code-Counter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+692c5af9d21617c4386896a249fb4e40be83b6b3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa99928c86cd5b3eb3f7e180c5e1ca9ecfd53fee")]
 [assembly: System.Reflection.AssemblyProductAttribute("Code-Counter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Code-Counter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
